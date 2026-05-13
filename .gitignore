@@ -1,0 +1,20 @@
+# 编译输出文件
+*.o
+*.out
+*.exe
+*.dll
+*.so
+*.a
+build/
+bin/
+
+# IDE 与操作系统配置
+.vscode/
+.idea/
+*.suo
+*.user
+.DS_Store
+
+# 产生的中间文件
+*.ll
+*.ref
