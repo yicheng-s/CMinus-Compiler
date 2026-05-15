@@ -59,18 +59,19 @@ void SLRTableGenerator::initGrammar() {
     addProduction("decl", {"constDecl"});
     addProduction("decl", {"varDecl"});
 
-    addProduction("constDecl", {"const", "bType", "constDef", "ConstDefTail", ";"});
+    addProduction("constDecl", {"const", "type", "constDef", "ConstDefTail", ";"});
     addProduction("ConstDefTail", {",", "constDef", "ConstDefTail"});
     addProduction("ConstDefTail", {});
 
-    addProduction("bType", {"int"});
-    addProduction("bType", {"float"});
+    addProduction("type", {"int"});
+    addProduction("type", {"float"});
+    addProduction("type", {"void"});
 
     addProduction("constDef", {"IDN", "=", "constInitVal"});
 
     addProduction("constInitVal", {"constExp"});
 
-    addProduction("varDecl", {"bType", "varDef", "VarDefTail", ";"});
+    addProduction("varDecl", {"type", "varDef", "VarDefTail", ";"});
     addProduction("VarDefTail", {",", "varDef", "VarDefTail"});
     addProduction("VarDefTail", {});
 
@@ -79,18 +80,15 @@ void SLRTableGenerator::initGrammar() {
 
     addProduction("initVal", {"exp"});
 
-    addProduction("funcDef", {"funcType", "IDN", "(", "FuncFParamsOpt", ")", "block"});
+    addProduction("funcDef", {"type", "IDN", "(", "FuncFParamsOpt", ")", "block"});
     addProduction("FuncFParamsOpt", {"funcFParams"});
     addProduction("FuncFParamsOpt", {});
-
-    addProduction("funcType", {"void"});
-    addProduction("funcType", {"int"});
 
     addProduction("funcFParams", {"funcFParam", "FuncFParamTail"});
     addProduction("FuncFParamTail", {",", "funcFParam", "FuncFParamTail"});
     addProduction("FuncFParamTail", {});
 
-    addProduction("funcFParam", {"bType", "IDN"});
+    addProduction("funcFParam", {"type", "IDN"});
 
     addProduction("block", {"{", "BlockItems", "}"});
     addProduction("BlockItems", {"blockItem", "BlockItems"});

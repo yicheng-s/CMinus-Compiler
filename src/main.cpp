@@ -1,5 +1,6 @@
 #include "Lexer.h"
 #include "SLRTableGenerator.h"
+#include "Parser.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -8,39 +9,40 @@ using namespace std;
 
 int main(int argc, char** argv) {
     if (argc < 2) {
-        cerr << "用法: " << argv[0] << " <源文件.sy>" << endl;
+        cerr << "Usage: " << argv[0] << " <source.sy>" << endl;
         return 1;
     }
 
     ifstream file(argv[1]);
     if (!file.is_open()) {
-        cerr << "无法打开文件: " << argv[1] << endl;
+        cerr << "Cannot open file: " << argv[1] << endl;
         return 1;
     }
     stringstream buffer;
     buffer << file.rdbuf();
     string source_code = buffer.str();
 
-    cout << "========== [Day 1] Lexer 词法分析测试 ==========" << endl;
+    // [Day 1] Lexer
     Lexer lexer(source_code);
     vector<Token> tokens = lexer.tokenize();
 
-    for (const auto& token : tokens) {
-        token.print();
-    }
-    cout << "================================================" << endl;
-    cout << "共解析得到 " << tokens.size() - 1 << " 个有效 Token (已滤除注释与空白)。" << endl;
-    cout << "已为 B/C 同学准备好输入流！" << endl;
-
-    cout << "\n========== [Day 2] SLR 分析表生成 ==========" << endl;
+    // [Day 2] SLR Table Generation
     SLRTableGenerator slrGen;
     slrGen.generate();
-    slrGen.printFirstFollow();
-    slrGen.printTable();
-    slrGen.exportTableCSV("slr_table.csv");
-    cout << "================================================" << endl;
-    cout << "状态数: " << slrGen.getActionTable().size() << endl;
-    cout << "SLR 分析表生成完毕！为 C 同学准备好了 ACTION/GOTO 表。" << endl;
+
+    // [Day 3] SLR Parsing + AST Construction
+    try {
+        Parser parser(tokens, slrGen);
+        ASTNode* astRoot = parser.parse();
+
+        cout << "Parse succeeded! AST:" << endl;
+        cout << "================================================" << endl;
+        Parser::printAST(astRoot);
+        cout << "================================================" << endl;
+    } catch (const exception& e) {
+        cerr << "Parse failed: " << e.what() << endl;
+        return 1;
+    }
 
     return 0;
 }
