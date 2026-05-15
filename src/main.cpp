@@ -1,4 +1,5 @@
 #include "Lexer.h"
+#include "SLRTableGenerator.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -11,7 +12,6 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    // 读取文件内容
     ifstream file(argv[1]);
     if (!file.is_open()) {
         cerr << "无法打开文件: " << argv[1] << endl;
@@ -21,18 +21,26 @@ int main(int argc, char** argv) {
     buffer << file.rdbuf();
     string source_code = buffer.str();
 
-    // 组长 A 负责的词法分析器运行验证
     cout << "========== [Day 1] Lexer 词法分析测试 ==========" << endl;
     Lexer lexer(source_code);
     vector<Token> tokens = lexer.tokenize();
 
-    // 打印 Token 序列流，严格满足大作业输出要求
     for (const auto& token : tokens) {
         token.print();
     }
     cout << "================================================" << endl;
     cout << "共解析得到 " << tokens.size() - 1 << " 个有效 Token (已滤除注释与空白)。" << endl;
     cout << "已为 B/C 同学准备好输入流！" << endl;
+
+    cout << "\n========== [Day 2] SLR 分析表生成 ==========" << endl;
+    SLRTableGenerator slrGen;
+    slrGen.generate();
+    slrGen.printFirstFollow();
+    slrGen.printTable();
+    slrGen.exportTableCSV("slr_table.csv");
+    cout << "================================================" << endl;
+    cout << "状态数: " << slrGen.getActionTable().size() << endl;
+    cout << "SLR 分析表生成完毕！为 C 同学准备好了 ACTION/GOTO 表。" << endl;
 
     return 0;
 }
