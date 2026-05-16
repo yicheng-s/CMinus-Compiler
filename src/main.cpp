@@ -1,6 +1,7 @@
 #include "Lexer.h"
 #include "SLRTableGenerator.h"
 #include "Parser.h"
+#include "IRGenerator.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -39,6 +40,13 @@ int main(int argc, char** argv) {
         cout << "================================================" << endl;
         Parser::printAST(astRoot);
         cout << "================================================" << endl;
+
+        IRGeneratorVisitor irGen;
+        astRoot->accept(&irGen);
+        ofstream irFile("output.ll");
+        irFile << irGen.getResult();
+        irFile.close();
+        cout << "LLVM IR written to output.ll" << endl;
     } catch (const exception& e) {
         cerr << "Parse failed: " << e.what() << endl;
         return 1;
