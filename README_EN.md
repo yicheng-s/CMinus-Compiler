@@ -113,7 +113,7 @@ lli output.ll
 
 ## 👨‍💻 Team & Roles
 
-This project was collaboratively completed by a team of 4 members from Tianjin University within an "Extreme 5-Day Sprint":
+This project was collaboratively completed by a team of 4 members from Tianjin University:
 
 - **👑 Sun Yicheng (Team Lead)**:
   - Responsible for project architecture, interface design, and ASTNode base class definition.
