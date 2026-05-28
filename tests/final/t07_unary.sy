@@ -1,0 +1,11 @@
+// t07: 一元运算 — C(UnaryExpNode链) D(neg/fptosi IR)
+int main() {
+    int a = 10;
+    int b;
+    b = -a;
+    b = +a;
+    b = !a;
+    b = -(-a);
+    b = !!a;
+    return b;
+}

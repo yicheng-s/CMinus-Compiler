@@ -1,0 +1,22 @@
+// t12: 复合分支 — C(嵌套IfStmt) D(多BasicBlock/phi)
+int max3(int a, int b, int c) {
+    if (a > b) {
+        if (a > c) {
+            return a;
+        } else {
+            return c;
+        }
+    } else {
+        if (b > c) {
+            return b;
+        } else {
+            return c;
+        }
+    }
+}
+
+int main() {
+    int x;
+    x = max3(10, 30, 20);
+    return x;
+}

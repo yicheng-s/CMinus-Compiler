@@ -1,0 +1,11 @@
+// t15: 词法边界 — A(注释/下划线ID/多位数) 全链路基础验证
+int _val_1 = 999;
+int big_num = 12345;
+
+int main() {
+    int _x2y;
+    int z;
+    _x2y = _val_1;
+    z = big_num;
+    return z;
+}

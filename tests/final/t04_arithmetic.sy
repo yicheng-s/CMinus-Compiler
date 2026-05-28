@@ -1,0 +1,10 @@
+// t04: 算术表达式 — C(BinaryExpNode优先级/左结合) D(add/sub/mul/div/rem IR)
+int main() {
+    int a;
+    int b;
+    int c;
+    a = 1 + 2 * 3;
+    b = (1 + 2) * 3;
+    c = 10 - 5 + 2;
+    return a + b - c;
+}

@@ -1,0 +1,17 @@
+// t10: 函数调用 — C(FuncCallNode) D(call IR)
+int square(int x) {
+    return x * x;
+}
+
+int add3(int a, int b, int c) {
+    return a + b + c;
+}
+
+int main() {
+    int x;
+    int y;
+    x = square(5);
+    y = add3(1, 2, 3);
+    y = add3(square(2), square(3), 0);
+    return y;
+}

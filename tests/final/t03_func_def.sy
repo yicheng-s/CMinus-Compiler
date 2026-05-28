@@ -1,0 +1,17 @@
+// t03: 函数定义 — B(多产生式) C(FuncDefNode) D(函数IR)
+int add(int a, int b) {
+    return a + b;
+}
+
+float div(float x, float y) {
+    return x / y;
+}
+
+void nop() {
+    return;
+}
+
+int main() {
+    nop();
+    return add(1, 2);
+}

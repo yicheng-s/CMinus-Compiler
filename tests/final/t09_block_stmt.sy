@@ -1,0 +1,13 @@
+// t09: block/表达式语句/空语句 — C(BlockNode/ExpStmtNode)
+int main() {
+    int x = 1;
+    {
+        int y = 10;
+        y = y + x;
+        x = y;
+    }
+    x = x + 1;
+    2 + 3;
+    ;
+    return x;
+}

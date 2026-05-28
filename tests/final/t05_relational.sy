@@ -1,0 +1,13 @@
+// t05: 关系与相等 — C(relExp/eqExp) D(icmp IR)
+int main() {
+    int a = 10;
+    int b = 20;
+    int r = 0;
+    if (a < b)  { r = 1; }
+    if (a > b)  { r = 2; }
+    if (a <= b) { r = 3; }
+    if (a >= b) { r = 4; }
+    if (a == b) { r = 5; }
+    if (a != b) { r = 6; }
+    return r;
+}

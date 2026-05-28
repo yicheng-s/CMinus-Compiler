@@ -1,0 +1,31 @@
+// t14: 综合 — 全部特性: 全局/局部变量+常量+多函数+if-else+嵌套调用+float+多运算符
+int g_val = 50;
+const int LIMIT = 80;
+
+int max(int a, int b) {
+    if (a > b) { return a; }
+    else       { return b; }
+}
+
+int abs(int x) {
+    if (x < 0) { return -x; }
+    return x;
+}
+
+float half(float x) {
+    return x / 2.0;
+}
+
+int main() {
+    int local = 30;
+    float fv = 6.0;
+    int result;
+    float fr;
+    result = max(g_val, local);
+    result = abs(-result);
+    fr = half(fv);
+    if (result > LIMIT) {
+        result = LIMIT;
+    }
+    return result;
+}

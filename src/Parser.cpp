@@ -4,8 +4,8 @@
 
 using namespace std;
 
-Parser::Parser(vector<Token>& tokens, SLRTableGenerator& slrGen)
-    : slrGen(slrGen), tokens(tokens), tokenIdx(0),
+Parser::Parser(vector<Token>& tokens, SLRTableGenerator& slrGen, ostream* trace)
+    : slrGen(slrGen), tokens(tokens), tokenIdx(0), traceOut(trace),
       actionTable(slrGen.getActionTable()),
       gotoTable(slrGen.getGotoTable()),
       productions(slrGen.getProductions())
@@ -541,6 +541,7 @@ ASTNode* Parser::doReduce(int prodId, vector<ASTNode*>& popped) {
 
 ASTNode* Parser::parse() {
     stateStack.push_back(0);
+    int stepNum = 0;
     int iter = 0;
     const int MAX_ITER = 50000;
 
@@ -574,6 +575,8 @@ ASTNode* Parser::parse() {
                 throw runtime_error(
                     "Unexpected SHIFT past end of token stream in state " + to_string(state));
             }
+            stepNum++;
+            if (traceOut) (*traceOut) << stepNum << "\t" << state << "#" << terminal.name << "\tmove" << endl;
             stateStack.push_back(action.value);
             semStack.push_back(tokenToSemNode(currentToken));
             tokenIdx++;
@@ -581,6 +584,9 @@ ASTNode* Parser::parse() {
             int prodId = action.value;
             const Production& prod = productions[prodId];
             int bodyLen = (int)prod.body.size();
+
+            stepNum++;
+            if (traceOut) (*traceOut) << stepNum << "\t" << state << "#" << terminal.name << "\treduction" << endl;
 
             vector<ASTNode*> popped;
             for (int i = 0; i < bodyLen; i++) {
@@ -603,6 +609,8 @@ ASTNode* Parser::parse() {
             stateStack.push_back(gotoIt->second);
             semStack.push_back(newNode);
         } else if (action.type == ActionEntry::ACCEPT) {
+            stepNum++;
+            if (traceOut) (*traceOut) << stepNum << "\t" << state << "#" << terminal.name << "\taccept" << endl;
             return semStack.back();
         }
     }

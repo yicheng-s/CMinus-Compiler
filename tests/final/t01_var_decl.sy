@@ -1,0 +1,12 @@
+// t01: 变量声明 — A词法(类型/标识符/数字/界符) C解析(多产生式规约)
+int g_a = 100;
+float g_b = 3.14;
+int g_c;
+
+int main() {
+    int x = 42;
+    int y;
+    float z = 2.5;
+    y = 0;
+    return x;
+}

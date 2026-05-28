@@ -1,0 +1,25 @@
+// t13: 多函数协作 — A(多标识符) B(全部产生式) C(多FuncDefNode) D(多函数IR)
+int add(int x, int y) {
+    return x + y;
+}
+
+int sub(int x, int y) {
+    return x - y;
+}
+
+int mul(int x, int y) {
+    return x * y;
+}
+
+int neg(int x) {
+    return -x;
+}
+
+int main() {
+    int a;
+    a = add(10, 5);
+    a = sub(a, 3);
+    a = mul(a, 2);
+    a = neg(a);
+    return a;
+}

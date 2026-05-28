@@ -6,6 +6,7 @@
 #include "SLRTableGenerator.h"
 #include <vector>
 #include <string>
+#include <iostream>
 
 using namespace std;
 
@@ -28,12 +29,14 @@ private:
     // 执行单个产生式的规约动作，返回归约后新建的 AST 节点
     ASTNode* doReduce(int prodId, vector<ASTNode*>& poppedSem);
 
+    ostream* traceOut;  // 规约序列输出流 (nullptr = 不输出)
+
     // 打印 AST (用于调试验证)
     static void printIndent(int depth);
     static string escapeStr(const string& s);
 
 public:
-    Parser(vector<Token>& tokens, SLRTableGenerator& slrGen);
+    Parser(vector<Token>& tokens, SLRTableGenerator& slrGen, ostream* trace = &cout);
 
     // 主解析接口，返回 AST 根节点
     ASTNode* parse();

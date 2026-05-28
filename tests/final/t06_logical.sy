@@ -1,0 +1,13 @@
+// t06: 逻辑表达式 — C(lAndExp/lOrExp/unaryOp!) D(and/or/xor IR)
+int main() {
+    int a = 1;
+    int b = 0;
+    int r = 0;
+    if (a && b) { r = 1; }
+    if (a || b) { r = 2; }
+    if (!a)     { r = 3; }
+    if (!b)     { r = 4; }
+    if (a > 0 && b < 10)  { r = 5; }
+    if (a < 0 || b > -10) { r = 6; }
+    return r;
+}
