@@ -42,6 +42,7 @@ int main(int argc, char** argv) {
         cout << "================================================" << endl;
 
         IRGeneratorVisitor irGen;
+        irGen.setSourceFilename(argv[1]);
         astRoot->accept(&irGen);
         ofstream irFile("output.ll");
         irFile << irGen.getResult();

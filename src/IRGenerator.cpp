@@ -13,6 +13,19 @@ string formatFloat(float v) {
 }
 
 void IRGeneratorVisitor::visit(ProgramNode* node) {
+    emit("; ModuleID = 'sysy2022_compiler'");
+    string src = sourceFilename.empty() ? "input.sy" : sourceFilename;
+    emit("source_filename = \"" + src + "\"");
+
+    emit("declare i32 @getint()");
+    emit("declare i32 @getch()");
+    emit("declare i32 @getarray(i32*)");
+    emit("declare void @putint(i32)");
+    emit("declare void @putch(i32)");
+    emit("declare void @putarray(i32, i32*)");
+    emit("declare void @starttime()");
+    emit("declare void @stoptime()");
+
     // Collect function signatures for call type resolution.
     for (auto* unit : node->compUnits) {
         if (auto* fn = dynamic_cast<FuncDefNode*>(unit)) {
@@ -210,7 +223,7 @@ void IRGeneratorVisitor::visit(FuncDefNode* node) {
     emit(sig);
 
     enterScope();
-    startBlock("entry");
+    startBlock(curFuncName + "_ENTRY");
 
     for (auto* p : node->params) {
         auto* pt = dynamic_cast<BTypeNode*>(p->bType);

@@ -46,6 +46,7 @@ private:
     string curDeclType;              // 当前声明的基础类型
     bool   needTerminator = false;   // 当前 basic block 是否需要终结指令
     string lastBlockLabel;           // 当前 basic block 的标号（用于 br 合并）
+    string sourceFilename;           // 源文件名（用于模块头）
 
     // ── 表达式求值结果 ──
     string lastResultVal;   // 上次 visit 表达式产生的 LLVM 值名
@@ -99,6 +100,7 @@ public:
     }
 
     string getResult() const { return ir.str(); }
+    void setSourceFilename(const string& name) { sourceFilename = name; }
 
     // ================================================================
     //  Visitor 实现（声明）
